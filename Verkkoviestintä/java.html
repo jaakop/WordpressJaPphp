@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+    body{
+        background-color: black;
+        text-align: center; 
+    }
+    button{ 
+        border-radius: 50px;
+        height: 100px;
+        width: 100px;
+        margin: 5px;
+        color:white;
+        font-size: 50px;
+    }
+    .nummberButton{
+        background-color: gray;
+    }.calcButton{
+        background-color: orange;
+    }.calcBar{
+        width: 420px;
+        height: 100px;
+        background-color: gainsboro;
+        margin: 5px auto;
+        border-radius: 50px;
+        text-align: right;
+    }.result{
+        font-size: 50px;
+        text-align: right;
+        margin: 20px;
+        padding-top:10px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+</style>
+</head>
+<body>
+    <div class="calcBar" align="center">
+        <p id="result" class="result"></p>
+    </div>
+    <button class="nummberButton" onclick="addNuber(1)">1</button>
+    <button class="nummberButton" onclick="addNuber(2)">2</button>
+    <button class="nummberButton" onclick="addNuber(3)">3</button><button class="calcButton" onclick="setChar('/')">&divide;</button><br>
+    <button class="nummberButton" onclick="addNuber(4)">4</button>
+    <button class="nummberButton" onclick="addNuber(5)">5</button>
+    <button class="nummberButton" onclick="addNuber(6)">6</button><button class="calcButton" onclick="setChar('*')">&times;</button><br>
+    <button class="nummberButton" onclick="addNuber(7)">7</button>
+    <button class="nummberButton" onclick="addNuber(8)">8</button>
+    <button class="nummberButton" onclick="addNuber(9)">9</button><button class="calcButton" onclick="setChar('-')">&minus;</button>   <br>
+    <button class="nummberButton" onclick="addNuber(0)">0</button><button class="nummberButton" onclick="setDecimal()">,</button>
+    <button class="calcButton" onclick="calculate()"    >&equals;</button><button class="calcButton" onclick="setChar('+')">&plus;</button>
+
+    <script>
+        var number1 = 0;
+        var number2 = 0;
+        var char;
+        var decimals = 1;
+        var decimal = false;
+    function makeADecimal(base, exponent){
+        var i;
+        var result = base;
+        for(i = 0; i < exponent; i++){
+            result = result/10;
+        }
+        return result;
+    }
+    function setDecimal(){
+        decimal = true;
+    }
+    function addNuber(_number){
+        if(char == null){
+            if(decimal){
+                number1 = number1+makeADecimal(_number, decimals);
+                decimals++;
+            }else{
+            number1 = number1*10+_number;
+            }
+            document.getElementById("result").innerHTML = number1;}
+        else{
+            if(decimal){
+                number2 = number2+makeADecimal(_number, decimals);
+                decimals++;
+            }else{
+            number2 = number2*10+_number;
+            }
+            document.getElementById("result").innerHTML = number1 + char + number2;
+        }
+    }
+    function setChar(_char){
+        decimals = 1;
+        decimal = false;
+        char = _char;
+        document.getElementById("result").innerHTML = number1 +char + number2;
+    }
+    function calculate(){
+        var result = 0;
+
+        switch(char){
+            case '+':
+            result = number1 + number2;
+            break;
+            case '-':
+            result = number1 - number2;
+            break;
+            case '*':
+            result = number1 * number2;
+            break;
+            case '/':
+            result = number1 / number2;        
+            break;
+        }
+        document.getElementById("result").innerHTML = result;
+        number1 = 0;
+        number2 = 0;
+        char = null;
+        decimals = 1;
+        decimal = false;
+    }
+    </script>
+</body>
+</html>
